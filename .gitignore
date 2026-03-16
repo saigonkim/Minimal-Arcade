@@ -1,0 +1,32 @@
+# General
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+
+# Firebase
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+
+# AI / IDE / Agentic folders
+.gemini/
+.agents/
+.agent/
+_agents/
+_agent/
+brain/
+artifacts/
+
+# Local build / Dist
+dist/
+build/
+.cache/
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

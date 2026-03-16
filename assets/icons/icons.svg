@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+
+  <!-- GAME A: Block / Perfect Stack icon -->
+  <symbol id="icon-stack" viewBox="0 0 64 64">
+    <rect x="8" y="44" width="48" height="10" rx="3" fill="currentColor" opacity="1"/>
+    <rect x="14" y="30" width="36" height="10" rx="3" fill="currentColor" opacity="0.8"/>
+    <rect x="20" y="16" width="26" height="10" rx="3" fill="currentColor" opacity="0.6"/>
+    <rect x="26" y="4" width="16" height="10" rx="3" fill="currentColor" opacity="0.4"/>
+  </symbol>
+
+  <!-- GAME B: Neon Orb / Chain Reaction icon -->
+  <symbol id="icon-neon" viewBox="0 0 64 64">
+    <circle cx="32" cy="32" r="8" fill="currentColor"/>
+    <circle cx="32" cy="32" r="14" fill="none" stroke="currentColor" stroke-width="2" opacity="0.6"/>
+    <circle cx="32" cy="32" r="20" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/>
+    <circle cx="32" cy="32" r="26" fill="none" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+    <!-- Orbiting particles -->
+    <circle cx="32" cy="6" r="3" fill="currentColor" opacity="0.7"/>
+    <circle cx="58" cy="32" r="3" fill="currentColor" opacity="0.7"/>
+    <circle cx="32" cy="58" r="3" fill="currentColor" opacity="0.7"/>
+    <circle cx="6" cy="32" r="3" fill="currentColor" opacity="0.7"/>
+    <circle cx="52" cy="12" r="2" fill="currentColor" opacity="0.5"/>
+    <circle cx="12" cy="52" r="2" fill="currentColor" opacity="0.5"/>
+  </symbol>
+
+  <!-- GAME C: Airplane / Aero Odyssey icon -->
+  <symbol id="icon-plane" viewBox="0 0 64 64">
+    <!-- Fuselage -->
+    <path d="M8 32 C8 32 24 28 40 32 C36 36 8 36 8 32Z" fill="currentColor"/>
+    <!-- Nose -->
+    <path d="M40 32 L56 32 L52 29 L40 30Z" fill="currentColor"/>
+    <!-- Top wing -->
+    <path d="M24 32 L20 14 L28 20 L30 32Z" fill="currentColor" opacity="0.8"/>
+    <!-- Bottom wing -->
+    <path d="M24 32 L20 50 L28 44 L30 32Z" fill="currentColor" opacity="0.8"/>
+    <!-- Tail fin top -->
+    <path d="M10 32 L8 20 L14 26 L14 32Z" fill="currentColor" opacity="0.6"/>
+    <!-- Tail fin bottom -->
+    <path d="M10 32 L8 44 L14 38 L14 32Z" fill="currentColor" opacity="0.6"/>
+    <!-- Engine boost trail -->
+    <path d="M8 30 L2 32 L8 34Z" fill="currentColor" opacity="0.4"/>
+  </symbol>
+
+  <!-- UI: Trophy / High Score -->
+  <symbol id="icon-trophy" viewBox="0 0 64 64">
+    <rect x="22" y="52" width="20" height="5" rx="2" fill="currentColor"/>
+    <rect x="18" y="56" width="28" height="5" rx="2.5" fill="currentColor"/>
+    <rect x="28" y="44" width="8" height="10" fill="currentColor"/>
+    <path d="M16 8 H48 V30 C48 42 16 42 16 30 Z" fill="currentColor"/>
+    <path d="M16 12 H10 C10 12 8 26 16 30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    <path d="M48 12 H54 C54 12 56 26 48 30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    <path d="M28 22 L32 14 L36 22 L44 22 L38 27 L40 35 L32 30 L24 35 L26 27 L20 22 Z" fill="white" opacity="0.2"/>
+  </symbol>
+
+  <!-- UI: Crown / Premium -->
+  <symbol id="icon-crown" viewBox="0 0 64 64">
+    <path d="M8 48 H56 L52 24 L40 36 L32 16 L24 36 L12 24 Z" fill="currentColor"/>
+    <circle cx="8" cy="48" r="4" fill="currentColor"/>
+    <circle cx="56" cy="48" r="4" fill="currentColor"/>
+    <circle cx="32" cy="16" r="4" fill="currentColor"/>
+    <rect x="6" y="50" width="52" height="7" rx="3" fill="currentColor"/>
+  </symbol>
+
+  <!-- UI: Play button -->
+  <symbol id="icon-play" viewBox="0 0 64 64">
+    <circle cx="32" cy="32" r="30" fill="currentColor" opacity="0.15"/>
+    <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="2"/>
+    <polygon points="26,18 26,46 48,32" fill="currentColor"/>
+  </symbol>
+
+  <!-- UI: Star -->
+  <symbol id="icon-star" viewBox="0 0 64 64">
+    <polygon points="32,4 40,24 62,24 44,38 51,58 32,46 13,58 20,38 2,24 24,24"
+             fill="currentColor"/>
+  </symbol>
+
+  <!-- UI: Lock (paywall) -->
+  <symbol id="icon-lock" viewBox="0 0 64 64">
+    <rect x="14" y="30" width="36" height="28" rx="5" fill="currentColor"/>
+    <path d="M20 30 V22 C20 12 44 12 44 22 V30" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="32" cy="44" r="5" fill="white" opacity="0.3"/>
+    <rect x="30" y="44" width="4" height="7" rx="2" fill="white" opacity="0.3"/>
+  </symbol>
+
+</svg>
