@@ -21,7 +21,7 @@ function initPerfectStack(canvas) {
   // ── State ────────────────────────────────────────────────────
   let W, H, groundY, startW;
   let stack = [], moving = null, particles = [];
-  let score = 0, combo = 0, camY = 0, running = false, rafId;
+  let score = 0, combo = 0, camY = 0, running = false, rafId, frameCount = 0;
 
   // ── Drop-action debounce (prevents touchstart + click double-fire) ──
   let _lastActionTime = 0;
@@ -189,14 +189,16 @@ function initPerfectStack(canvas) {
     if (!running) return;
     update();
     draw();
+    frameCount++;
     rafId = requestAnimationFrame(loop);
   }
 
   // Separate loop for draining particles after game over
   function particleDrainLoop() {
+    if (!running) return; // SAFETY: Stop if game was stopped/exited
     updateParticles();
     draw();
-    if (particles.length > 0) requestAnimationFrame(particleDrainLoop);
+    if (particles.length > 0) rafId = requestAnimationFrame(particleDrainLoop);
   }
 
   function update() {

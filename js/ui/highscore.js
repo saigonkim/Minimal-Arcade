@@ -48,30 +48,20 @@ function saveHighScore(gameId, score) {
   return false;
 }
 
-/**
- * Refresh all high-score displays (card + HUD) for a given game.
- * @param {string} gameId
- */
 function refreshScoreUI(gameId) {
   const score = getHighScore(gameId);
-  const label = score > 0 ? score.toLocaleString() : '—';
+  // Default to '0' for consistency with starting HTML
+  const label = score > 0 ? score.toLocaleString() : '0';
 
-  // Card high-score display
-  const cardEl = document.getElementById('card-hs-' + _idToShort(gameId));
+  // Game Card BEST display (Targets id="hs-perfect-stack" etc.)
+  const cardEl = document.getElementById('hs-' + gameId);
   if (cardEl) cardEl.textContent = label;
-
-  // Global hero bar
-  const heroEl = document.getElementById('hs-' + _idToShort(gameId));
-  if (heroEl) heroEl.textContent = label;
 
   // HUD best score
   const hud = document.getElementById('hud-best');
-  if (hud && window._currentGame === gameId) hud.textContent = label;
-}
-
-function _idToShort(id) {
-  const map = { 'perfect-stack': 'stack', 'neon-chain': 'neon', 'aero-odyssey': 'aero' };
-  return map[id] || id;
+  if (hud && window._currentGame === gameId) {
+    hud.textContent = label;
+  }
 }
 
 /**

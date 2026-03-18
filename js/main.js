@@ -6,6 +6,39 @@
 window._currentGame = null;
 window._currentGameInstance = null;
 
+/* ── Global Stats Tracking ────────────────────────────────── */
+const STAT_BASE = {
+  players: 128491,
+  plays: 1024562
+};
+
+function initStats() {
+  const playersOffset = parseInt(localStorage.getItem('arcade_stats_players_offset') || '0');
+  const playsOffset = parseInt(localStorage.getItem('arcade_stats_plays_offset') || '0');
+  updateStatUI(playersOffset, playsOffset);
+}
+
+function updateStatUI(pOff, lOff) {
+  const elPlayers = document.getElementById('stat-players');
+  const elPlays = document.getElementById('stat-plays');
+  if (elPlayers) elPlayers.textContent = (STAT_BASE.players + pOff).toLocaleString();
+  if (elPlays) elPlays.textContent = (STAT_BASE.plays + lOff).toLocaleString();
+}
+
+function incrementPlayStats() {
+  let playsOffset = parseInt(localStorage.getItem('arcade_stats_plays_offset') || '0');
+  playsOffset++;
+  localStorage.setItem('arcade_stats_plays_offset', playsOffset);
+
+  let playersOffset = parseInt(localStorage.getItem('arcade_stats_players_offset') || '0');
+  if (!localStorage.getItem('arcade_user_registered')) {
+    playersOffset++;
+    localStorage.setItem('arcade_stats_players_offset', playersOffset);
+    localStorage.setItem('arcade_user_registered', 'true');
+  }
+  updateStatUI(playersOffset, playsOffset);
+}
+
 /* ── Page Transition ─────────────────────────────────────── */
 const overlay = document.getElementById('page-transition');
 
@@ -21,6 +54,12 @@ function fadeIn() {
 
 /* ── Launch a Game ───────────────────────────────────────── */
 function launchGame(gameId) {
+  if (window._isLaunching) return;
+  window._isLaunching = true;
+
+  // Real-time stat update
+  incrementPlayStats();
+
   fadeOut(() => {
     // Hide landing, show game shell
     document.getElementById('landing-page').style.display = 'none';
@@ -68,6 +107,7 @@ function launchGame(gameId) {
     if (finishBtn) finishBtn.style.display = (gameId === 'neon-chain') ? 'inline-flex' : 'none';
 
     fadeIn();
+    window._isLaunching = false;
   });
 }
 
@@ -169,20 +209,7 @@ function resizeCanvas(canvas, container) {
   return { W, H, dpr };
 }
 
-/* ── Card Click / Keyboard ───────────────────────────────── */
-document.querySelectorAll('.game-card').forEach(card => {
-  card.addEventListener('click', (e) => {
-    // Don't trigger if clicking the button (it has its own onclick)
-    if (e.target.classList.contains('btn')) return;
-    launchGame(card.dataset.game);
-  });
-  card.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      launchGame(card.dataset.game);
-    }
-  });
-});
+
 
 /* ── Handle window resize while in game ─────────────────── */
 window.addEventListener('resize', () => {
@@ -203,7 +230,9 @@ window.addEventListener('resize', () => {
 const _previewRafs = {};
 
 function stopAllPreviews() {
-  Object.values(_previewRafs).forEach(id => cancelAnimationFrame(id));
+  Object.values(_previewRafs).forEach(id => {
+    if (id) cancelAnimationFrame(id);
+  });
   Object.keys(_previewRafs).forEach(k => delete _previewRafs[k]);
 }
 
@@ -434,6 +463,23 @@ function finishCurrentGame() {
 
 /* ── Boot ────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
+  initStats();
   startAllPreviews();
   initScoreUI();
+
+  /* ── Card Click / Keyboard ───────────────────────────────── */
+  document.querySelectorAll('.game-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      // Don't trigger if clicking the button (it has its own onclick)
+      if (e.target.classList.contains('btn') || e.target.closest('.btn')) return;
+      console.log('Launching game:', card.dataset.game);
+      launchGame(card.dataset.game);
+    });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        launchGame(card.dataset.game);
+      }
+    });
+  });
 });

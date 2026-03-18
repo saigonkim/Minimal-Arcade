@@ -30,7 +30,8 @@ function generateTailNumber() {
 
 // ── State checks ───────────────────────────────────────────────
 function isPremium() {
-  return localStorage.getItem('arcade_premium') === 'true';
+  // Use sessionStorage for easy testing (resets on F5 or close tab)
+  return sessionStorage.getItem('arcade_premium') === 'true';
 }
 
 function getAircraft() {
@@ -42,8 +43,15 @@ function getAircraft() {
 function showPaywall() {
   const modal = document.getElementById('paywall-modal');
   if (!modal) return;
-  // Always reset to checkout state on open
-  setState('checkout');
+
+  // If not logged in, show login-required state instead of checkout
+  if (!isLoggedIn()) {
+    setState('login-required');
+  } else {
+    setState('checkout');
+    _renderPayPalButton();
+  }
+
   modal.classList.add('active');
 }
 
@@ -58,23 +66,61 @@ function closePaywall() {
 
 // ── Modal state machine ────────────────────────────────────────
 function setState(state) {
-  const states = ['checkout', 'processing', 'success'];
+  const states = ['checkout', 'processing', 'success', 'login-required'];
   states.forEach(s => {
     const el = document.getElementById('paywall-state-' + s);
     if (el) el.style.display = (s === state) ? '' : 'none';
   });
 }
 
-// ── PayPal button handler ─────────────────────────────────────
-function handlePayPal() {
-  // Transition → processing
-  setState('processing');
+// ── PayPal SDK Button Renderer ────────────────────────────────
+let _paypalRendered = false;
 
-  // Simulate payment (1.8s delay)
-  setTimeout(() => {
-    const aircraft = assignAircraft();
-    showSuccessScreen(aircraft);
-  }, 1800);
+function _renderPayPalButton() {
+  if (_paypalRendered) return;
+  if (typeof paypal === 'undefined') {
+    console.warn('[PayPal] SDK not yet loaded');
+    return;
+  }
+
+  _paypalRendered = true;
+
+  paypal.Buttons({
+    style: {
+      layout: 'vertical',
+      color:  'gold',
+      shape:  'rect',
+      label:  'pay',
+      height: 44,
+    },
+
+    createOrder: (_data, actions) => {
+      const uid = window._currentUser ? window._currentUser.uid : 'anonymous';
+      return actions.order.create({
+        purchase_units: [{
+          amount:      { value: '5.00', currency_code: 'USD' },
+          description: 'Aero Odyssey Pro — Lifetime Access',
+          custom_id:   uid,
+        }],
+      });
+    },
+
+    onApprove: async (_data, actions) => {
+      setState('processing');
+      await actions.order.capture();
+      const aircraft = assignAircraft();
+      showSuccessScreen(aircraft);
+    },
+
+    onError: (err) => {
+      console.error('[PayPal] Payment error:', err);
+      setState('checkout');
+    },
+
+    onCancel: () => {
+      setState('checkout');
+    },
+  }).render('#paypal-button-container');
 }
 
 function assignAircraft() {
@@ -86,9 +132,19 @@ function assignAircraft() {
     skin: skin.skin,
     registered: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long' }),
   };
-  localStorage.setItem('arcade_premium', 'true');
+
+  sessionStorage.setItem('arcade_premium', 'true');
+
+  // Mirror to localStorage for in-game logic
   localStorage.setItem('arcade_aircraft', JSON.stringify(aircraft));
   localStorage.setItem('arcade_tail', tail);
+  localStorage.setItem('arcade_premium', 'true');
+
+  // Persist to Firestore if user is logged in (permanent, cross-device)
+  if (window._currentUser && typeof savePremiumStatus === 'function') {
+    savePremiumStatus(window._currentUser.uid, aircraft);
+  }
+
   return aircraft;
 }
 
@@ -100,13 +156,32 @@ function showSuccessScreen(aircraft) {
   if (nameEl) nameEl.textContent = '"' + aircraft.name + '"';
   if (skinEl) skinEl.textContent = aircraft.skin;
   setState('success');
-  // Update the global badge if it exists
-  const globalBadge = document.getElementById('premium-badge');
+  
+  updateGlobalPremiumUI();
+}
+
+function updateGlobalPremiumUI(unlocked = true) {
+  const globalBadge = document.getElementById('header-premium-badge');
+  const premiumBtn = document.getElementById('header-premium-btn');
+  
   if (globalBadge) {
-    globalBadge.textContent = 'PREMIUM UNLOCKED';
-    globalBadge.style.background = 'rgba(255, 201, 74, 0.15)';
-    globalBadge.style.color = 'var(--accent-gold)';
-    globalBadge.style.border = '1px solid rgba(255, 201, 74, 0.3)';
+    if (unlocked) {
+      globalBadge.textContent = 'PREMIUM UNLOCKED';
+      globalBadge.classList.add('premium');
+      globalBadge.style.background = 'rgba(255, 201, 74, 0.15)';
+      globalBadge.style.color = 'var(--accent-gold)';
+      globalBadge.style.border = '1px solid rgba(255, 201, 74, 0.3)';
+    } else {
+      globalBadge.textContent = 'FREE VERSION';
+      globalBadge.classList.remove('premium');
+      globalBadge.style.background = 'rgba(57, 255, 20, 0.08)';
+      globalBadge.style.color = 'var(--accent-green)';
+      globalBadge.style.border = '1px solid rgba(57, 255, 20, 0.2)';
+    }
+  }
+  
+  if (premiumBtn) {
+    premiumBtn.style.display = unlocked ? 'none' : '';
   }
 }
 
@@ -114,40 +189,42 @@ function showSuccessScreen(aircraft) {
 function launchPremiumGame() {
   const modal = document.getElementById('paywall-modal');
   if (modal) modal.classList.remove('active');
-  // Unlock and restart the aero game
+  
   if (window._aeroGame) {
     window._aeroGame.unlockPremium();
   } else {
-    // If game not open, navigate to it
     if (typeof launchGame === 'function') launchGame('aero-odyssey');
   }
-  // Update premium button on card
+  
   refreshPremiumUI();
 }
 
 // ── Refresh premium state on landing page ─────────────────────
 function refreshPremiumUI() {
   const aircraft = getAircraft();
-  if (!aircraft) return;
-  // Update premium button to "Fly Now"
-  const premiumBtn = document.querySelector('#card-aero .btn-premium');
-  if (premiumBtn) {
-    premiumBtn.textContent = '✈ ' + aircraft.tail + ' — Fly Now';
+  if (!aircraft || !isPremium()) return;
+  
+  // Update the badge on the Aero card to show the tail number as a "Fly Now" action
+  const aeroBadge = document.getElementById('aero-status-badge');
+  if (aeroBadge) {
+    aeroBadge.innerHTML = `<span style="color: var(--accent-gold); font-weight: 700;">✈ ${aircraft.tail}</span> <span style="color: rgba(255,255,255,0.85); margin-left: 4px;">— Fly Now</span>`;
+    aeroBadge.style.background = 'rgba(255, 201, 74, 0.1)';
+    aeroBadge.style.padding = '6px 14px';
+    aeroBadge.style.borderRadius = '20px';
+    aeroBadge.style.border = '1px solid rgba(255, 201, 74, 0.3)';
+    aeroBadge.style.cursor = 'pointer';
   }
-  // Update highscore labels
+  
+  updateGlobalPremiumUI();
+  
   if (typeof initScoreUI === 'function') initScoreUI();
 }
 
-// ── On page load, restore premium UI ──────────────────────────
+// ── On page load, restore/reset premium UI ────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+  // If user is already logged in (checked by onAuthStateChanged), 
+  // status will be refreshed from Firestore there rather than manually here.
   if (isPremium()) {
     refreshPremiumUI();
-    const globalBadge = document.getElementById('premium-badge');
-    if (globalBadge) {
-      globalBadge.textContent = 'PREMIUM UNLOCKED';
-      globalBadge.style.background = 'rgba(255, 201, 74, 0.15)';
-      globalBadge.style.color = 'var(--accent-gold)';
-      globalBadge.style.border = '1px solid rgba(255, 201, 74, 0.3)';
-    }
   }
 });

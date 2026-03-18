@@ -203,7 +203,7 @@ function initNeonChain(canvas) {
     }
 
     draw(now);
-    rafId = requestAnimationFrame(loop);
+    if (running) rafId = requestAnimationFrame(loop);
   }
 
   // ── Draw ─────────────────────────────────────────────────────

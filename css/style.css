@@ -62,6 +62,26 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ── Layout Utilities ──────────────────────────────────────── */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+  width: 100%;
+}
+
+.text-center { 
+  text-align: center; 
+}
+.full-width { width: 100%; }
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 body {
   font-family: var(--font-body);
   background-color: var(--bg-base);
@@ -100,14 +120,16 @@ body::before {
 /* ── Header / Nav ─────────────────────────────────────────── */
 .site-header {
   position: relative;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 28px 48px;
+  z-index: 100;
+  padding: 24px 0;
   border-bottom: 1px solid var(--border-subtle);
   backdrop-filter: blur(12px);
   background: rgba(8,8,16,0.7);
+}
+
+.branding {
+  display: flex;
+  align-items: center;
 }
 
 .site-logo {
@@ -126,20 +148,24 @@ body::before {
 .header-actions {
   display: flex;
   align-items: center;
+  gap: 12px;
 }
-.site-header .badge-premium {
-  height: 38px;
-  display: flex;
+
+/* Make the Free Version badge look like a button in size */
+.header-badge {
+  display: inline-flex;
   align-items: center;
+  height: 38px; /* Matches .btn-premium height in header */
   padding: 0 16px;
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   border-radius: var(--radius-sm);
-  background: rgba(57, 255, 20, 0.1);
+  background: rgba(57, 255, 20, 0.08);
   color: var(--accent-green);
-  border: 1px solid rgba(57, 255, 20, 0.25);
-  margin-right: 12px;
+  border: 1px solid rgba(57, 255, 20, 0.2);
+  white-space: nowrap;
 }
 .btn-premium {
   height: 38px;
@@ -155,12 +181,69 @@ body::before {
   transition: all 0.2s ease;
 }
 
+/* ── Auth UI (login button + profile) ─────────────────────── */
+.btn-auth-login {
+  height: 38px;
+  padding: 0 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.btn-auth-login:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-1px);
+}
+
+.auth-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.auth-avatar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.auth-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid rgba(124, 106, 247, 0.5);
+}
+.auth-name {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  max-width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Responsive: hide name on small screens ─────────────────── */
+@media (max-width: 600px) {
+  .auth-name { display: none; }
+  .header-badge { display: none; }
+  .btn-auth-login { padding: 0 12px; font-size: 0; }
+  .btn-auth-login svg { display: block; }
+}
+
+
 /* ── Hero Section ─────────────────────────────────────────── */
-.hero {
+.hero-section {
   position: relative;
   z-index: 10;
-  text-align: center;
-  padding: 80px 24px 60px;
+  padding: 100px 0 80px;
 }
 
 .hero-eyebrow {
@@ -193,11 +276,12 @@ body::before {
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-size: clamp(2rem, 8vw, 4.5rem);
   font-weight: 700;
-  line-height: 1.05;
+  line-height: 1.1;
   letter-spacing: -0.04em;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  overflow-wrap: break-word;
 }
 .hero-title .gradient-word {
   background: linear-gradient(135deg, var(--accent-violet), var(--accent-cyan));
@@ -662,6 +746,7 @@ body::before {
 }
 /* ── PayPal Checkout Card ─────────────────────────────────── */
 .checkout-card {
+  position: relative; /* For absolute close button */
   background: #1a1a2a; border: 1px solid rgba(255,255,255,0.08);
   border-radius: var(--radius-xl); padding: 32px;
   max-width: 400px; width: 90%;
@@ -678,11 +763,23 @@ body::before {
   font-weight: 600; color: var(--text-primary);
 }
 .checkout-close {
-  background: none; border: none; color: var(--text-muted);
-  font-size: 1.1rem; cursor: pointer; padding: 4px 8px;
-  border-radius: 6px; transition: color 0.2s, background 0.2s;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
+  color: var(--text-muted);
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; cursor: pointer;
+  border-radius: 50%; transition: all 0.2s;
 }
-.checkout-close:hover { color: var(--text-primary); background: rgba(255,255,255,0.06); }
+.checkout-close:hover { 
+  color: #ff4d4d; 
+  background: rgba(255,77,77,0.1);
+  border-color: rgba(255,77,77,0.2);
+  transform: rotate(90deg);
+}
 .checkout-product-row {
   display: flex; align-items: center; gap: 14px; padding: 16px;
   background: rgba(255,201,74,0.05); border: 1px solid rgba(255,201,74,0.12);
@@ -759,16 +856,16 @@ body::before {
 /* ── Game-Over Overlay ────────────────────────────────────── */
 .game-over-overlay {
   display: none;
-  position: absolute;
+  position: fixed;
   inset: 0;
-  z-index: 200;
+  z-index: 9999;
   align-items: center;
   justify-content: center;
-  background: rgba(8,8,16,0.82);
-  backdrop-filter: blur(10px);
+  background: var(--bg-overlay);
+  backdrop-filter: blur(12px);
 }
 .game-over-overlay.active {
-  display: flex;
+  display: flex !important;
   animation: fadeIn 0.3s;
 }
 .game-over-card {
@@ -825,7 +922,13 @@ body::before {
     padding: 56px 16px 40px;
   }
   .site-header {
-    padding: 16px 20px;
+    padding: 12px 20px;
+  }
+  #header-premium-badge {
+    display: none;
+  }
+  .header-actions {
+    gap: 8px;
   }
   .site-nav {
     display: none;
@@ -941,4 +1044,94 @@ body::before {
 .status-success { color: #28a745; background: #e8f5e9; padding: 12px; border-radius: 8px; }
 
 .crypto-note { font-size: 10px; color: #bbb; text-align: center; margin-top: 15px; }
+
+/* ── Legal & Static Pages ─────────────────────────────────── */
+.legal-body {
+  padding-top: 100px;
+  padding-bottom: 80px;
+}
+.legal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 48px;
+  margin-bottom: 40px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+.legal-header {
+  margin-bottom: 40px;
+  text-align: center;
+}
+.legal-header h1 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.legal-text {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+.legal-text h2 {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+.legal-text h3 {
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.legal-text p {
+  margin-bottom: 1.5rem;
+}
+.legal-text ul {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+.legal-text li {
+  margin-bottom: 0.5rem;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent-violet);
+  text-decoration: none;
+  font-weight: 600;
+  margin-bottom: 24px;
+  transition: transform 0.2s ease;
+}
+.back-link:hover {
+  transform: translateX(-4px);
+}
+
+@media (max-width: 768px) {
+  .legal-body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+  .legal-card {
+    padding: 24px 20px;
+    border-radius: var(--radius-md);
+    margin-bottom: 24px;
+  }
+  .legal-header h1 {
+    font-size: 1.8rem;
+  }
+  .legal-text {
+    font-size: 0.95rem;
+  }
+  .legal-text h2 {
+    font-size: 1.3rem;
+    margin-top: 2rem;
+  }
+}
 

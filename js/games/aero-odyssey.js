@@ -23,7 +23,9 @@ function initAeroOdyssey(canvas) {
 
   /* ── Premium check ── */
   function checkPremium() {
-    return localStorage.getItem('arcade_premium') === 'true';
+    // Check both session (new) and local (legacy) for robustness
+    return sessionStorage.getItem('arcade_premium') === 'true' || 
+           localStorage.getItem('arcade_premium') === 'true';
   }
 
   /* ── Game state ── */
@@ -113,8 +115,9 @@ function initAeroOdyssey(canvas) {
       if (obstacleTimer <= 0) {
         spawnObstacle();
         // Adjust timer based on viewport factor to maintain physical distance
+        // Increasing by 25% on narrow screens to prevent 'impossible' obstacle density
         const baseTimer = premiumUnlocked ? 1600 : 2000;
-        obstacleTimer = W < 600 ? baseTimer : baseTimer; 
+        obstacleTimer = W < 600 ? baseTimer * 1.25 : baseTimer; 
       }
     layers[2].items.forEach(obs => {
       obs.x -= speed * layers[2].speed * dt * 60;
@@ -200,7 +203,7 @@ function initAeroOdyssey(canvas) {
   function checkDemoLimit() {
     if (premiumUnlocked) return;
     const elapsed = (performance.now() - startTime) / 1000;
-    if (elapsed >= 60) {
+    if (elapsed >= 30) {
       paused = true;
       if (typeof showPaywall === 'function') showPaywall();
     }
@@ -411,7 +414,7 @@ function initAeroOdyssey(canvas) {
     ctx.fill();
 
     // ── Tail number (premium) ──
-    if (isPremium) {
+    if (premiumUnlocked) {
       const tailNum = localStorage.getItem('arcade_tail') || 'ARC-0000';
       ctx.globalAlpha = 0.7;
       ctx.shadowBlur  = 0;
@@ -427,8 +430,8 @@ function initAeroOdyssey(canvas) {
   function drawHints() {
     // Demo timer bar (free mode)
     if (!premiumUnlocked) {
-      const elapsed = Math.min((performance.now() - startTime) / 1000, 60);
-      const pct = 1 - elapsed / 60;
+      const elapsed = Math.min((performance.now() - startTime) / 1000, 30);
+      const pct = 1 - elapsed / 30;
       const barW = 140;
       ctx.save();
       ctx.globalAlpha = 0.6;
@@ -444,7 +447,7 @@ function initAeroOdyssey(canvas) {
       ctx.font = "11px 'Inter', sans-serif";
       ctx.fillStyle = '#8888aa';
       ctx.textAlign = 'center';
-      ctx.fillText(`Demo · ${Math.ceil(60 - elapsed)}s left`, W / 2, H - 24);
+      ctx.fillText(`Demo · ${Math.ceil(30 - elapsed)}s left`, W / 2, H - 24);
       ctx.restore();
     }
 
@@ -512,25 +515,32 @@ function initAeroOdyssey(canvas) {
 
   /* ── Public API ── */
   const api = {
-    stop() {
+    unlockPremium: () => {
+      premiumUnlocked = true;
+      // Re-init stars and other premium effects immediately
+      stars.length = 0;
+      for(let i=0; i<80; i++) {
+        stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.5, speed: 0.5 + Math.random() });
+      }
+      paused = false;
+    },
+    stop: () => {
       running = false;
       cancelAnimationFrame(rafId);
       window.removeEventListener('keydown', onKeyDown);
       window.removeEventListener('keyup',   onKeyUp);
     },
-    pause()  { paused = true; },
-    resume() {
-      paused = false;
-      lastT  = performance.now();
-      startTime += performance.now() - startTime; // re-anchor timer
-      if (running) rafId = requestAnimationFrame(loop);
+    pause: ()  => { paused = true; },
+    resume: () => {
+      if (paused) {
+        paused = false;
+        // Re-anchor startTime so the demo doesn't jump
+        // We calculate how much time was left and reset startTime relative to now
+        const elapsedSoFar = (performance.now() - startTime) / 1000;
+        startTime = performance.now() - (elapsedSoFar * 1000); // This just resets it to the same elapsed
+      }
     },
-    resize() { setup(); initLayers(); },
-    unlockPremium() {
-      premiumUnlocked = true;
-      paused = false;
-      startTime = performance.now(); // reset timer
-    },
+    resize: () => { setup(); initLayers(); }
   };
   window._aeroGame = api;
   return api;
