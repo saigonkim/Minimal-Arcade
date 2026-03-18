@@ -10,3 +10,5 @@ window.FIREBASE_CONFIG = {
   messagingSenderId: "YOUR_SENDER_ID",
   appId:             "YOUR_APP_ID",
 };
+
+window.PAYPAL_CLIENT_ID = "YOUR_PAYPAL_LIVE_CLIENT_ID";

@@ -73,13 +73,25 @@ function setState(state) {
   });
 }
 
+// ── PayPal SDK Dynamic Loader ─────────────────────────────────
+function _loadPayPalSDK(callback) {
+  if (typeof paypal !== 'undefined') { callback(); return; }
+  const clientId = window.PAYPAL_CLIENT_ID;
+  if (!clientId) { console.error('[PayPal] PAYPAL_CLIENT_ID not set in firebase-config.js'); return; }
+  const script = document.createElement('script');
+  script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=USD`;
+  script.onload = callback;
+  script.onerror = () => console.error('[PayPal] Failed to load SDK');
+  document.head.appendChild(script);
+}
+
 // ── PayPal SDK Button Renderer ────────────────────────────────
 let _paypalRendered = false;
 
 function _renderPayPalButton() {
   if (_paypalRendered) return;
   if (typeof paypal === 'undefined') {
-    console.warn('[PayPal] SDK not yet loaded');
+    _loadPayPalSDK(_renderPayPalButton);
     return;
   }
 
