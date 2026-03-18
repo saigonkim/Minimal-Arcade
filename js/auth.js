@@ -3,18 +3,9 @@
    Google Sign-in for user identification before payment.
    ============================================================ */
 
-// Firebase config for minimal-arcade-777
-const FIREBASE_CONFIG = {
-  apiKey:            "REMOVED_FROM_HISTORY",
-  authDomain:        "minimal-arcade-777.firebaseapp.com",
-  projectId:         "minimal-arcade-777",
-  storageBucket:     "minimal-arcade-777.firebasestorage.app",
-  messagingSenderId: "795013277870",
-  appId:             "1:795013277870:web:9fdeb0b66ede2f8706653f",
-};
-
 // ── Initialize Firebase ──────────────────────────────────────
-firebase.initializeApp(FIREBASE_CONFIG);
+// Config is loaded from js/firebase-config.js (gitignored)
+firebase.initializeApp(window.FIREBASE_CONFIG);
 const _auth = firebase.auth();
 const _googleProvider = new firebase.auth.GoogleAuthProvider();
 
@@ -62,9 +53,9 @@ function loginWithGoogle() {
   });
 }
 
-/** Sign out the current user. */
+/** Sign out the current user and reload to reset all UI state. */
 function logout() {
-  return _auth.signOut();
+  return _auth.signOut().then(() => window.location.reload());
 }
 
 /** Check if a user is currently logged in. */
@@ -78,7 +69,6 @@ function _updateAuthUI(user) {
   const profileArea = document.getElementById('auth-profile-area');
   const avatar      = document.getElementById('auth-avatar');
   const displayName = document.getElementById('auth-display-name');
-  const logoutBtn   = document.getElementById('auth-logout-btn');
   const premiumBtn  = document.getElementById('header-premium-btn');
 
   if (!loginBtn || !profileArea) return;

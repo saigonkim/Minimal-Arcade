@@ -24,6 +24,9 @@ dist/
 build/
 .cache/
 
+# Firebase credentials (use firebase-config.example.js as template)
+js/firebase-config.js
+
 # Environment
 .env
 .env.local
