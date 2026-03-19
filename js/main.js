@@ -12,6 +12,12 @@ const STAT_BASE = {
   plays: 1024562
 };
 
+const GAME_TITLES = {
+  'perfect-stack': 'The Perfect Stack',
+  'neon-chain': 'Neon Chain Reaction',
+  'aero-odyssey': 'Aero Odyssey',
+};
+
 function initStats() {
   const playersOffset = parseInt(localStorage.getItem('arcade_stats_players_offset') || '0');
   const playsOffset = parseInt(localStorage.getItem('arcade_stats_plays_offset') || '0');
@@ -72,12 +78,7 @@ function launchGame(gameId) {
     window._currentGame = gameId;
 
     // Update HUD title
-    const titles = {
-      'perfect-stack': 'The Perfect Stack',
-      'neon-chain':    'Neon Chain Reaction',
-      'aero-odyssey':  'Aero Odyssey',
-    };
-    document.getElementById('hud-game-title').textContent = titles[gameId] || gameId;
+    document.getElementById('hud-game-title').textContent = GAME_TITLES[gameId] || gameId;
 
     // Update HUD best score
     const best = getHighScore(gameId);
@@ -180,6 +181,13 @@ function showGameOver(score, gameId) {
   const isNew = saveHighScore(gameId, score);
   const best  = getHighScore(gameId);
 
+  window._lastScore = score;
+  
+  // Also push to global Firestore leaderboard
+  if (typeof submitScore === 'function') {
+    submitScore(gameId, score);
+  }
+
   document.getElementById('go-score').textContent = score.toLocaleString();
   document.getElementById('go-title').textContent = 'Game Over';
   document.getElementById('go-best-msg').textContent =
@@ -188,6 +196,53 @@ function showGameOver(score, gameId) {
   document.getElementById('game-over-overlay').classList.add('active');
   document.getElementById('hud-best').textContent = best.toLocaleString();
   refreshScoreUI(gameId);
+}
+
+/* ── Sharing & Social ─────────────────────────────────────── */
+async function shareScore() {
+  const gameId = window._currentGame;
+  const score = window._lastScore || 0;
+  const gameName = GAME_TITLES[gameId] || "Minimal Arcade";
+  
+  const text = `I just scored ${score.toLocaleString()} in ${gameName} at Minimal Arcade! 🕹️ Can you beat me? No install needed, play here: https://minimal-arcade-777.web.app/`;
+  
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: 'Minimal Arcade',
+        text: text,
+        url: 'https://minimal-arcade-777.web.app/'
+      });
+      gtag('event', 'share', { method: 'Web Share', item_id: gameId, score: score });
+    } catch (err) {
+      console.warn('Share cancelled or failed', err);
+    }
+  } else {
+    // Fallback: Copy to clipboard
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast('Copied!');
+      gtag('event', 'share', { method: 'Clipboard', item_id: gameId, score: score });
+    } catch (err) {
+      console.error('Failed to copy', err);
+    }
+  }
+}
+
+function showToast(message) {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+  
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  
+  container.appendChild(toast);
+  
+  // Remove after animation finishes (3s)
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
 }
 
 /* ── Update HUD Score (called by game engines) ───────────── */
@@ -482,4 +537,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  /* ── Leaderboard Handling ────────────────────────────────── */
+  const lbTabs = document.querySelectorAll('.tab-btn');
+  lbTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      lbTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const game = tab.dataset.tab;
+      if (typeof refreshLeaderboardUI === 'function') {
+        refreshLeaderboardUI(game);
+      }
+    });
+  });
+
+  // Initial fetch
+  if (typeof refreshLeaderboardUI === 'function') {
+    refreshLeaderboardUI('perfect-stack');
+  }
 });

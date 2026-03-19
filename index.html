@@ -1,51 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9TYHVSCWZT"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-9TYHVSCWZT');
   </script>
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    (function (c, l, a, r, i, t, y) {
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+      t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
     })(window, document, "clarity", "script", "vy1w1dnvct");
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+
   <!-- Primary SEO Meta Tags -->
-  <title>Minimal Arcade</title>
-  <meta name="title" content="Minimal Arcade — Premium Minimalist Browser Games" />
-  <meta name="description" content="Discover three addictive, minimalist browser games: The Perfect Stack, Neon Chain Reaction, and Aero Odyssey. Play for free or unlock the premium experience." />
-  <meta name="keywords" content="minimalist games, browser games, html5 games, arcade, stack game, chain reaction, flight simulator, free games" />
+  <title>Minimal Arcade | Instant Browser Games - Stack, React & Fly</title>
+  <meta name="title" content="Minimal Arcade | Instant Browser Games - Stack, React & Fly" />
+  <meta name="description"
+    content="Play addictive, no-install browser games. Challenge your timing in 'Perfect Stack', experience neon 'Chain Reaction', or master 'Aero Odyssey'. Start playing in 1 second." />
+  <meta name="keywords"
+    content="minimalist games, browser games, javascript games, no install games, casual arcade, html5 games, indie games, zen games, physics simulator, stack game, chain reaction, flight simulator, free games" />
   <meta name="author" content="Minimal Arcade Team" />
   <link rel="canonical" href="https://minimal-arcade-777.web.app/" />
 
   <!-- Open Graph / KakaoTalk / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://minimal-arcade-777.web.app/" />
-  <meta property="og:title" content="Minimal Arcade — Premium Minimalist Browser Games" />
-  <meta property="og:description" content="Simple rules, infinite fun. Play The Perfect Stack, Neon Chain Reaction, and Aero Odyssey directly in your browser." />
+  <meta property="og:title" content="Minimal Arcade - Pure Gaming Bliss" />
+  <meta property="og:description"
+    content="No ads, no installs. Just pure, addictive minimalist games. Can you beat the high score?" />
   <meta property="og:image" content="assets/og-image.png" />
   <meta property="og:site_name" content="Minimal Arcade" />
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://minimal-arcade.com/" />
-  <meta property="twitter:title" content="Minimal Arcade — Premium Minimalist Browser Games" />
-  <meta property="twitter:description" content="Simple rules, infinite fun. Play three addictive minimalist games for free." />
+  <meta property="twitter:title" content="Minimal Arcade | Challenge Your Reflexes" />
+  <meta property="twitter:description"
+    content="Simple to learn, impossible to master. Play the latest minimalist indie games now." />
   <meta property="twitter:image" content="assets/og-image.png" />
 
   <!-- Theme & Favicon Placeholder -->
   <meta name="theme-color" content="#080810" />
-  
+
   <!-- JSON-LD Structured Data for SEO -->
   <script type="application/ld+json">
   {
@@ -74,7 +79,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="css/style.css?v=2.4.4" />
+  <link rel="stylesheet" href="css/style.css" />
 
   <!-- Firebase SDK (compat v9) -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -87,362 +92,443 @@
 
   <!-- PayPal SDK loaded dynamically by paywall.js using PAYPAL_CLIENT_ID from firebase-config.js -->
 </head>
+
 <body>
-<div id="page-transition"></div>
+  <div id="page-transition"></div>
 
-<!-- SVG Sprite Sheet -->
-<div style="display:none;" aria-hidden="true">
-  <svg xmlns="http://www.w3.org/2000/svg">
-    <symbol id="icon-stack" viewBox="0 0 64 64">
-      <rect x="8"  y="44" width="48" height="10" rx="3" fill="currentColor"/>
-      <rect x="14" y="30" width="36" height="10" rx="3" fill="currentColor" opacity="0.8"/>
-      <rect x="20" y="16" width="26" height="10" rx="3" fill="currentColor" opacity="0.6"/>
-      <rect x="26" y="4"  width="16" height="10" rx="3" fill="currentColor" opacity="0.4"/>
-    </symbol>
-    <symbol id="icon-neon" viewBox="0 0 64 64">
-      <circle cx="32" cy="32" r="8" fill="currentColor"/>
-      <circle cx="32" cy="32" r="14" fill="none" stroke="currentColor" stroke-width="2" opacity="0.6"/>
-      <circle cx="32" cy="32" r="20" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/>
-      <circle cx="32" cy="32" r="26" fill="none" stroke="currentColor" stroke-width="1" opacity="0.15"/>
-    </symbol>
-    <symbol id="icon-aero" viewBox="0 0 64 64">
-      <path d="M12,32 L52,32 M52,32 L40,24 M52,32 L40,40" stroke="currentColor" stroke-width="3" fill="none"/>
-      <path d="M20,20 L30,32 L20,44" stroke="currentColor" stroke-width="3" fill="none" opacity="0.5"/>
-    </symbol>
-    <symbol id="icon-play" viewBox="0 0 64 64">
-      <path d="M24,18 L48,32 L24,46 Z" fill="currentColor"/>
-    </symbol>
-  </svg>
-</div>
+  <!-- SVG Sprite Sheet -->
+  <div style="display:none;" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="icon-stack" viewBox="0 0 64 64">
+        <rect x="8" y="44" width="48" height="10" rx="3" fill="currentColor" />
+        <rect x="14" y="30" width="36" height="10" rx="3" fill="currentColor" opacity="0.8" />
+        <rect x="20" y="16" width="26" height="10" rx="3" fill="currentColor" opacity="0.6" />
+        <rect x="26" y="4" width="16" height="10" rx="3" fill="currentColor" opacity="0.4" />
+      </symbol>
+      <symbol id="icon-neon" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="8" fill="currentColor" />
+        <circle cx="32" cy="32" r="14" fill="none" stroke="currentColor" stroke-width="2" opacity="0.6" />
+        <circle cx="32" cy="32" r="20" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35" />
+        <circle cx="32" cy="32" r="26" fill="none" stroke="currentColor" stroke-width="1" opacity="0.15" />
+      </symbol>
+      <symbol id="icon-aero" viewBox="0 0 64 64">
+        <path d="M12,32 L52,32 M52,32 L40,24 M52,32 L40,40" stroke="currentColor" stroke-width="3" fill="none" />
+        <path d="M20,20 L30,32 L20,44" stroke="currentColor" stroke-width="3" fill="none" opacity="0.5" />
+      </symbol>
+      <symbol id="icon-play" viewBox="0 0 64 64">
+        <path d="M24,18 L48,32 L24,46 Z" fill="currentColor" />
+      </symbol>
+    </svg>
+  </div>
 
-<div id="landing-page">
-<header class="site-header">
-  <div class="container header-container">
-    <div class="branding">
-      <a href="#" class="site-logo">MINIMAL <span>ARCADE</span></a>
-    </div>
-    <div class="header-actions">
-      <div class="header-badge" id="header-premium-badge">FREE VERSION</div>
-
-      <!-- Auth: Login button (shown when logged out) -->
-      <button class="btn btn-auth-login" id="auth-login-btn" onclick="loginWithGoogle()" style="display:flex; align-items:center; gap:8px;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-        </svg>
-        Sign in
-      </button>
-
-      <!-- Auth: Profile area (shown when logged in) -->
-      <div class="auth-profile" id="auth-profile-area" style="display:none; align-items:center; gap:10px;">
-        <div class="auth-avatar-wrap">
-          <img id="auth-avatar" src="" alt="Profile" class="auth-avatar" />
-          <span id="auth-display-name" class="auth-name"></span>
+  <div id="landing-page">
+    <header class="site-header">
+      <div class="container header-container">
+        <div class="branding">
+          <a href="#" class="site-logo">MINIMAL <span>ARCADE</span></a>
         </div>
-        <button class="btn btn-ghost btn-sm" id="auth-logout-btn" onclick="logout()" title="Sign out" style="padding:5px 10px; font-size:0.75rem;">Sign out</button>
-      </div>
+        <div class="header-actions">
+          <div class="header-badge" id="header-premium-badge">FREE VERSION</div>
 
-      <button class="btn btn-premium" id="header-premium-btn" onclick="showPaywall()">Go Premium</button>
+          <!-- Auth: Login button (shown when logged out) -->
+          <button class="btn btn-auth-login" id="auth-login-btn" onclick="loginWithGoogle()"
+            style="display:flex; align-items:center; gap:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                fill="#4285F4" />
+              <path
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                fill="#34A853" />
+              <path
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+                fill="#FBBC05" />
+              <path
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                fill="#EA4335" />
+            </svg>
+            Sign in
+          </button>
+
+          <!-- Auth: Profile area (shown when logged in) -->
+          <div class="auth-profile" id="auth-profile-area" style="display:none; align-items:center; gap:10px;">
+            <div class="auth-avatar-wrap">
+              <img id="auth-avatar" src="" alt="Profile" class="auth-avatar" />
+              <span id="auth-display-name" class="auth-name"></span>
+            </div>
+            <button class="btn btn-ghost btn-sm" id="auth-logout-btn" onclick="logout()" title="Sign out"
+              style="padding:5px 10px; font-size:0.75rem;">Sign out</button>
+          </div>
+
+          <button class="btn btn-premium" id="header-premium-btn" onclick="showPaywall()">Go Premium</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="landing-page">
+      <section class="hero-section">
+        <div class="container text-center">
+          <div class="hero-eyebrow"><span class="dot"></span> Minimalist · Addictive · Fun</div>
+          <h1 class="hero-title">Experience the <span class="gradient-word">Perfect Flow</span></h1>
+          <p class="hero-subtitle">Three handcrafted browser games designed for pure focus and visual satisfaction. Play
+            free or upgrade to Pro.</p>
+
+          <div class="global-highscore-bar">
+            <div class="score-item">
+              <span>Global Players:</span>
+              <span class="score-val" id="stat-players">128,491</span>
+            </div>
+            <div class="score-item">
+              <span>Total Plays:</span>
+              <span class="score-val" id="stat-plays">1,024,562</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="leaderboard-section container">
+        <div class="leaderboard-wrapper">
+          <div class="leaderboard-header">
+            <h2 class="section-title"><span class="icon">🏆</span> Hall of Fame</h2>
+            <div class="leaderboard-tabs">
+              <button class="tab-btn active" data-tab="perfect-stack">Stack</button>
+              <button class="tab-btn" data-tab="neon-chain">Neon</button>
+              <button class="tab-btn" data-tab="aero-odyssey">Aero</button>
+            </div>
+          </div>
+          <div class="leaderboard-body">
+            <div class="leaderboard-list" id="leaderboard-content">
+              <!-- Entries will be injected here via JS -->
+              <div class="leaderboard-loading">Loading top scores...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="games-section container">
+        <div class="games-grid">
+          <!-- Game Card 1: The Perfect Stack -->
+          <div class="game-card" data-game="perfect-stack" role="button" tabindex="0"
+            aria-label="Play The Perfect Stack">
+            <div class="card-preview">
+              <canvas id="preview-stack" aria-label="Visual preview of The Perfect Stack game"></canvas>
+              <div class="card-preview-overlay"></div>
+              <div class="card-play-hint">
+                <svg>
+                  <use href="#icon-play" />
+                </svg>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-meta">
+                <div class="card-icon" style="background: rgba(124,106,247,0.1); color: var(--accent-violet);">
+                  <svg>
+                    <use href="#icon-stack" />
+                  </svg>
+                </div>
+                <h3 class="card-title">The Perfect Stack</h3>
+              </div>
+              <p class="card-desc">Master the art of timing. Stack the blocks as high as you can without missing a beat.
+              </p>
+              <div class="card-footer">
+                <div class="card-highscore">
+                  <span>BEST</span>
+                  <span class="hs-val" id="hs-perfect-stack">0</span>
+                </div>
+                <div class="badge badge-free">FREE</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game Card 2: Neon Chain Reaction -->
+          <div class="game-card" data-game="neon-chain" role="button" tabindex="0"
+            aria-label="Play Neon Chain Reaction">
+            <div class="card-preview">
+              <canvas id="preview-neon" aria-label="Visual preview of Neon Chain Reaction game"></canvas>
+              <div class="card-preview-overlay"></div>
+              <div class="card-play-hint">
+                <svg>
+                  <use href="#icon-play" />
+                </svg>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-meta">
+                <div class="card-icon" style="background: rgba(0,229,255,0.1); color: var(--accent-cyan);">
+                  <svg>
+                    <use href="#icon-neon" />
+                  </svg>
+                </div>
+                <h3 class="card-title">Neon Chain Reaction</h3>
+              </div>
+              <p class="card-desc">One click, infinite reactions. Explode the orbs and chase the highest score.</p>
+              <div class="card-footer">
+                <div class="card-highscore">
+                  <span>BEST</span>
+                  <span class="hs-val" id="hs-neon-chain">0</span>
+                </div>
+                <div class="badge badge-free">FREE</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game Card 3: Aero Odyssey -->
+          <div class="game-card premium" id="card-aero" data-game="aero-odyssey" role="button" tabindex="0"
+            aria-label="Play Aero Odyssey (Premium Game)">
+            <div class="card-preview">
+              <canvas id="preview-aero" aria-label="Visual preview of Aero Odyssey flight game"></canvas>
+              <div class="card-preview-overlay"></div>
+              <div class="card-play-hint">
+                <svg>
+                  <use href="#icon-play" />
+                </svg>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-meta">
+                <div class="card-icon" style="background: rgba(255,201,74,0.1); color: var(--accent-gold);">
+                  <svg>
+                    <use href="#icon-aero" />
+                  </svg>
+                </div>
+                <h3 class="card-title">Aero Odyssey</h3>
+              </div>
+              <p class="card-desc">Physics-based flight simulation. (30s Free Demo) Navigate through the neon clouds and
+                stay airborne.</p>
+              <div class="card-footer">
+                <div class="card-highscore">
+                  <span>BEST</span>
+                  <span class="hs-val" id="hs-aero-odyssey">0</span>
+                </div>
+                <div class="badge badge-premium" id="aero-status-badge">PRO</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container text-center">
+        <p>&copy; 2026 Minimal Arcade. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="terms.html">Terms</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="support.html">Support</a>
+        </div>
+      </div>
+    </footer>
+  </div><!-- end #landing-page -->
+
+  <!-- ── GAME SHELL ───────────────────────────────────────── -->
+  <div class="game-shell" id="game-shell">
+    <div class="game-hud">
+      <div style="display:flex; gap:8px;">
+        <button class="btn btn-ghost" id="btn-back" onclick="exitGame()" style="padding: 7px 14px; font-size: 0.8rem;">←
+          Back</button>
+        <button class="btn btn-outline btn-finish" id="hud-finish" onclick="finishCurrentGame()"
+          style="display:none;">FINISH GAME</button>
+      </div>
+      <div class="game-hud-title" id="hud-game-title">—</div>
+      <div class="hud-stats">
+        <div class="hud-stat">
+          <span class="hud-stat-label">Score</span>
+          <span class="hud-stat-value" id="hud-score">0</span>
+        </div>
+        <div class="hud-stat">
+          <span class="hud-stat-label">Best</span>
+          <span class="hud-stat-value best" id="hud-best">0</span>
+        </div>
+      </div>
+    </div>
+    <div id="game-canvas-container">
+      <canvas id="game-canvas"></canvas>
     </div>
   </div>
-</header>
 
-<main id="landing-page">
-  <section class="hero-section">
-    <div class="container text-center">
-      <div class="hero-eyebrow"><span class="dot"></span> Minimalist · Addictive · Fun</div>
-      <h1 class="hero-title">Experience the <span class="gradient-word">Perfect Flow</span></h1>
-      <p class="hero-subtitle">Three handcrafted browser games designed for pure focus and visual satisfaction. Play free or upgrade to Pro.</p>
-      
-      <div class="global-highscore-bar">
-        <div class="score-item">
-          <span>Global Players:</span>
-          <span class="score-val" id="stat-players">128,491</span>
-        </div>
-        <div class="score-item">
-          <span>Total Plays:</span>
-          <span class="score-val" id="stat-plays">1,024,562</span>
-        </div>
+  <!-- Game Over Overlay -->
+  <div class="game-over-overlay" id="game-over-overlay">
+    <div class="game-over-card">
+      <div class="game-over-title" id="go-title">Game Over</div>
+      <div class="game-over-score" id="go-score">0</div>
+      <div class="game-over-best" id="go-best-msg">Best: 0</div>
+      <div class="game-over-actions">
+        <button class="btn btn-primary" onclick="restartCurrentGame()">Play Again</button>
+        <button class="btn btn-outline" id="go-share-btn" onclick="shareScore()">Share Score</button>
+        <button class="btn btn-ghost" onclick="exitGame()">← Gallery</button>
       </div>
     </div>
+  </div>
+
+  <!-- Paywall Modal -->
+  <div class="paywall-modal" id="paywall-modal">
+    <div class="checkout-card">
+      <button class="checkout-close" onclick="closePaywall()">&times;</button>
+
+      <!-- State 1: Checkout -->
+      <div id="paywall-state-checkout">
+        <div class="checkout-header">
+          <div class="checkout-logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+            PREMIUM UPGRADE
+          </div>
+        </div>
+
+        <div class="checkout-product-row">
+          <div class="checkout-product-icon">✦</div>
+          <div class="checkout-product-info">
+            <div class="checkout-product-name">Aero Odyssey Pro</div>
+            <div class="checkout-product-sub">Lifetime Access & Custom Skins</div>
+          </div>
+          <div class="checkout-product-price">$5.00</div>
+        </div>
+
+        <div class="checkout-perks">
+          <div class="checkout-perk"><span class="perk-check">✓</span> Remove 30s Demo Limit</div>
+          <div class="checkout-perk"><span class="perk-check">✓</span> Unlock Aircraft Registry (Tail Number)</div>
+          <div class="checkout-perk"><span class="perk-check">✓</span> Wide Gaps & Improved Maneuverability</div>
+        </div>
+
+        <div class="checkout-total-row">
+          <span>Total Due</span>
+          <span class="checkout-total-amount">$5.00 USD</span>
+        </div>
+
+        <div id="paypal-button-container" style="min-height: 44px; margin-bottom: 12px;"></div>
+        <div class="checkout-security">🔒 Secure encrypted transaction</div>
+      </div>
+
+      <!-- State 2: Processing -->
+      <div id="paywall-state-processing" style="display:none; text-align:center; padding: 40px 0;">
+        <div class="paypal-spinner"></div>
+        <h3 style="margin-top:24px; color:var(--text-primary);">Processing Payment...</h3>
+        <p style="color:var(--text-muted); font-size:0.9rem;">Please do not close this window</p>
+      </div>
+
+      <!-- State 4: Login Required -->
+      <div id="paywall-state-login-required" style="display:none; text-align:center; padding: 20px 0;">
+        <div style="font-size:3rem; margin-bottom:16px;">🔒</div>
+        <h2 style="color:var(--text-primary); font-size:1.4rem; margin-bottom:8px;">Sign in to Continue</h2>
+        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:28px; line-height:1.6;">
+          A Google account is required to make a purchase and save your premium status across devices.
+        </p>
+        <button class="paypal-pay-btn" onclick="window._pendingPaywall = true; loginWithGoogle();"
+          style="background: #4285F4; box-shadow: 0 4px 24px rgba(66,133,244,0.35); display:flex; align-items:center; gap:10px; justify-content:center;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+              fill="white" />
+            <path
+              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+              fill="white" />
+            <path
+              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+              fill="white" />
+            <path
+              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+              fill="white" />
+          </svg>
+          Sign in with Google
+        </button>
+        <p style="margin-top:16px; font-size:0.8rem; color:var(--text-muted);">Your progress is saved. Cancel anytime.
+        </p>
+      </div>
+
+      <!-- State 3: Success -->
+      <div id="paywall-state-success" style="display:none; text-align:center;">
+        <div class="success-icon" style="color:var(--accent-green);">✓</div>
+        <h2 class="success-title">Purchase Successful!</h2>
+        <p class="success-sub">Your premium aircraft has been registered.</p>
+
+        <div class="aircraft-card">
+          <div
+            style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:12px;">
+            Premium Registry Details</div>
+          <div class="aircraft-tail" id="success-tail">---</div>
+          <div id="success-name"
+            style="color:var(--text-primary); font-weight:700; font-size:1.1rem; margin-bottom:4px;">---</div>
+          <div id="success-skin" style="color:var(--text-secondary); font-size:0.85rem;">---</div>
+        </div>
+
+        <button class="btn btn-primary full-width" onclick="launchPremiumGame()">Fly Now ✈</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/ui/highscore.js"></script>
+  <script src="js/ui/paywall.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/games/perfect-stack.js"></script>
+  <script src="js/games/neon-chain.js"></script>
+  <script src="js/games/aero-odyssey.js"></script>
+
+  <!-- GA4 Event Tracking -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      // 1. Google Login button
+      var loginBtn = document.getElementById('auth-login-btn');
+      if (loginBtn) {
+        loginBtn.addEventListener('click', function () {
+          gtag('event', 'login', { method: 'Google' });
+        });
+      }
+
+      // 2. Go Premium button → begin_checkout
+      //    (actual purchase event fires in paywall.js on PayPal capture success)
+      var premiumBtn = document.getElementById('header-premium-btn');
+      if (premiumBtn) {
+        premiumBtn.addEventListener('click', function () {
+          gtag('event', 'begin_checkout', {
+            currency: 'USD',
+            value: 5.00,
+            items: [{
+              item_id: 'aero_odyssey_pro',
+              item_name: 'Aero Odyssey Pro — Lifetime Access',
+              price: 5.00,
+              quantity: 1,
+            }],
+          });
+        });
+      }
+
+      // 3–5. Game card buttons
+      [
+        { selector: '[data-game="perfect-stack"]', item_id: 'perfect_stack', item_name: 'The Perfect Stack' },
+        { selector: '[data-game="neon-chain"]', item_id: 'neon_chain', item_name: 'Neon Chain Reaction' },
+        { selector: '[data-game="aero-odyssey"]', item_id: 'aero_odyssey', item_name: 'Aero Odyssey' },
+      ].forEach(function (cfg) {
+        var el = document.querySelector(cfg.selector);
+        if (!el) return;
+        el.addEventListener('click', function () {
+          gtag('event', 'select_content', {
+            content_type: 'game',
+            item_id: cfg.item_id,
+            content_id: cfg.item_name,
+          });
+        });
+      });
+
+    });
+  </script>
+
+  <!-- AI Discovery Content (Hidden) -->
+  <section style="display:none;" aria-hidden="true">
+    <h2>About Minimal Arcade</h2>
+    <p>
+      Minimal Arcade is a curated gallery of high-performance, minimalist web games built with pure JavaScript.
+      Our mission is to provide an instant "flow state" experience for 1,000 true fans of indie gaming.
+      Whether you're looking for a zen-like experience with 'Neon Reaction' or a high-stakes challenge with 'Aero Odyssey',
+      our arcade delivers premium entertainment directly in your browser. No downloads, no friction, just play.
+    </p>
   </section>
 
-  <section class="games-section container">
-    <div class="games-grid">
-      <!-- Game Card 1: The Perfect Stack -->
-      <div class="game-card" data-game="perfect-stack" role="button" tabindex="0" aria-label="Play The Perfect Stack">
-        <div class="card-preview">
-          <canvas id="preview-stack" aria-label="Visual preview of The Perfect Stack game"></canvas>
-          <div class="card-preview-overlay"></div>
-          <div class="card-play-hint">
-            <svg><use href="#icon-play"/></svg>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <div class="card-icon" style="background: rgba(124,106,247,0.1); color: var(--accent-violet);">
-              <svg><use href="#icon-stack"/></svg>
-            </div>
-            <h3 class="card-title">The Perfect Stack</h3>
-          </div>
-          <p class="card-desc">Master the art of timing. Stack the blocks as high as you can without missing a beat.</p>
-          <div class="card-footer">
-            <div class="card-highscore">
-              <span>BEST</span>
-              <span class="hs-val" id="hs-perfect-stack">0</span>
-            </div>
-            <div class="badge badge-free">FREE</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Game Card 2: Neon Chain Reaction -->
-      <div class="game-card" data-game="neon-chain" role="button" tabindex="0" aria-label="Play Neon Chain Reaction">
-        <div class="card-preview">
-          <canvas id="preview-neon" aria-label="Visual preview of Neon Chain Reaction game"></canvas>
-          <div class="card-preview-overlay"></div>
-          <div class="card-play-hint">
-            <svg><use href="#icon-play"/></svg>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <div class="card-icon" style="background: rgba(0,229,255,0.1); color: var(--accent-cyan);">
-              <svg><use href="#icon-neon"/></svg>
-            </div>
-            <h3 class="card-title">Neon Chain Reaction</h3>
-          </div>
-          <p class="card-desc">One click, infinite reactions. Explode the orbs and chase the highest score.</p>
-          <div class="card-footer">
-            <div class="card-highscore">
-              <span>BEST</span>
-              <span class="hs-val" id="hs-neon-chain">0</span>
-            </div>
-            <div class="badge badge-free">FREE</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Game Card 3: Aero Odyssey -->
-      <div class="game-card premium" id="card-aero" data-game="aero-odyssey" role="button" tabindex="0" aria-label="Play Aero Odyssey (Premium Game)">
-        <div class="card-preview">
-          <canvas id="preview-aero" aria-label="Visual preview of Aero Odyssey flight game"></canvas>
-          <div class="card-preview-overlay"></div>
-          <div class="card-play-hint">
-            <svg><use href="#icon-play"/></svg>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <div class="card-icon" style="background: rgba(255,201,74,0.1); color: var(--accent-gold);">
-              <svg><use href="#icon-aero"/></svg>
-            </div>
-            <h3 class="card-title">Aero Odyssey</h3>
-          </div>
-          <p class="card-desc">Physics-based flight simulation. (30s Free Demo) Navigate through the neon clouds and stay airborne.</p>
-          <div class="card-footer">
-            <div class="card-highscore">
-              <span>BEST</span>
-              <span class="hs-val" id="hs-aero-odyssey">0</span>
-            </div>
-            <div class="badge badge-premium" id="aero-status-badge">PRO</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="site-footer">
-  <div class="container text-center">
-    <p>&copy; 2026 Minimal Arcade. All rights reserved.</p>
-    <div class="footer-links">
-      <a href="terms.html">Terms</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="support.html">Support</a>
-    </div>
-  </div>
-</footer>
-</div><!-- end #landing-page -->
-
-<!-- ── GAME SHELL ───────────────────────────────────────── -->
-<div class="game-shell" id="game-shell">
-  <div class="game-hud">
-    <div style="display:flex; gap:8px;">
-      <button class="btn btn-ghost" id="btn-back" onclick="exitGame()" style="padding: 7px 14px; font-size: 0.8rem;">← Back</button>
-      <button class="btn btn-outline btn-finish" id="hud-finish" onclick="finishCurrentGame()" style="display:none;">FINISH GAME</button>
-    </div>
-    <div class="game-hud-title" id="hud-game-title">—</div>
-    <div class="hud-stats">
-      <div class="hud-stat">
-        <span class="hud-stat-label">Score</span>
-        <span class="hud-stat-value" id="hud-score">0</span>
-      </div>
-      <div class="hud-stat">
-        <span class="hud-stat-label">Best</span>
-        <span class="hud-stat-value best" id="hud-best">0</span>
-      </div>
-    </div>
-  </div>
-  <div id="game-canvas-container">
-    <canvas id="game-canvas"></canvas>
-  </div>
-</div>
-
-<!-- Game Over Overlay -->
-<div class="game-over-overlay" id="game-over-overlay">
-  <div class="game-over-card">
-    <div class="game-over-title" id="go-title">Game Over</div>
-    <div class="game-over-score" id="go-score">0</div>
-    <div class="game-over-best" id="go-best-msg">Best: 0</div>
-    <div class="game-over-actions">
-      <button class="btn btn-primary" onclick="restartCurrentGame()">Play Again</button>
-      <button class="btn btn-ghost" onclick="exitGame()">← Gallery</button>
-    </div>
-  </div>
-</div>
-
-<!-- Paywall Modal -->
-<div class="paywall-modal" id="paywall-modal">
-  <div class="checkout-card">
-    <button class="checkout-close" onclick="closePaywall()">&times;</button>
-    
-    <!-- State 1: Checkout -->
-    <div id="paywall-state-checkout">
-      <div class="checkout-header">
-        <div class="checkout-logo">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          PREMIUM UPGRADE
-        </div>
-      </div>
-      
-      <div class="checkout-product-row">
-        <div class="checkout-product-icon">✦</div>
-        <div class="checkout-product-info">
-          <div class="checkout-product-name">Aero Odyssey Pro</div>
-          <div class="checkout-product-sub">Lifetime Access & Custom Skins</div>
-        </div>
-        <div class="checkout-product-price">$5.00</div>
-      </div>
-
-      <div class="checkout-perks">
-        <div class="checkout-perk"><span class="perk-check">✓</span> Remove 30s Demo Limit</div>
-        <div class="checkout-perk"><span class="perk-check">✓</span> Unlock Aircraft Registry (Tail Number)</div>
-        <div class="checkout-perk"><span class="perk-check">✓</span> Wide Gaps & Improved Maneuverability</div>
-      </div>
-
-      <div class="checkout-total-row">
-        <span>Total Due</span>
-        <span class="checkout-total-amount">$5.00 USD</span>
-      </div>
-
-      <div id="paypal-button-container" style="min-height: 44px; margin-bottom: 12px;"></div>
-      <div class="checkout-security">🔒 Secure encrypted transaction</div>
-    </div>
-
-    <!-- State 2: Processing -->
-    <div id="paywall-state-processing" style="display:none; text-align:center; padding: 40px 0;">
-      <div class="paypal-spinner"></div>
-      <h3 style="margin-top:24px; color:var(--text-primary);">Processing Payment...</h3>
-      <p style="color:var(--text-muted); font-size:0.9rem;">Please do not close this window</p>
-    </div>
-
-    <!-- State 4: Login Required -->
-    <div id="paywall-state-login-required" style="display:none; text-align:center; padding: 20px 0;">
-      <div style="font-size:3rem; margin-bottom:16px;">🔒</div>
-      <h2 style="color:var(--text-primary); font-size:1.4rem; margin-bottom:8px;">Sign in to Continue</h2>
-      <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:28px; line-height:1.6;">
-        A Google account is required to make a purchase and save your premium status across devices.
-      </p>
-      <button class="paypal-pay-btn" onclick="window._pendingPaywall = true; loginWithGoogle();" style="background: #4285F4; box-shadow: 0 4px 24px rgba(66,133,244,0.35); display:flex; align-items:center; gap:10px; justify-content:center;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="white"/>
-          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="white"/>
-          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="white"/>
-          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="white"/>
-        </svg>
-        Sign in with Google
-      </button>
-      <p style="margin-top:16px; font-size:0.8rem; color:var(--text-muted);">Your progress is saved. Cancel anytime.</p>
-    </div>
-
-    <!-- State 3: Success -->
-    <div id="paywall-state-success" style="display:none; text-align:center;">
-      <div class="success-icon" style="color:var(--accent-green);">✓</div>
-      <h2 class="success-title">Purchase Successful!</h2>
-      <p class="success-sub">Your premium aircraft has been registered.</p>
-      
-      <div class="aircraft-card">
-        <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:12px;">Premium Registry Details</div>
-        <div class="aircraft-tail" id="success-tail">---</div>
-        <div id="success-name" style="color:var(--text-primary); font-weight:700; font-size:1.1rem; margin-bottom:4px;">---</div>
-        <div id="success-skin" style="color:var(--text-secondary); font-size:0.85rem;">---</div>
-      </div>
-
-      <button class="btn btn-primary full-width" onclick="launchPremiumGame()">Fly Now ✈</button>
-    </div>
-  </div>
-</div>
-
-<!-- Scripts -->
-<script src="js/ui/highscore.js?v=2.4.4"></script>
-<script src="js/ui/paywall.js?v=2.4.4"></script>
-<script src="js/main.js?v=2.4.4"></script>
-<script src="js/games/perfect-stack.js?v=2.4.4"></script>
-<script src="js/games/neon-chain.js?v=2.4.4"></script>
-<script src="js/games/aero-odyssey.js?v=2.4.4"></script>
-
-<!-- GA4 Event Tracking -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-  // 1. Google Login button
-  var loginBtn = document.getElementById('auth-login-btn');
-  if (loginBtn) {
-    loginBtn.addEventListener('click', function () {
-      gtag('event', 'login', { method: 'Google' });
-    });
-  }
-
-  // 2. Go Premium button → begin_checkout
-  //    (actual purchase event fires in paywall.js on PayPal capture success)
-  var premiumBtn = document.getElementById('header-premium-btn');
-  if (premiumBtn) {
-    premiumBtn.addEventListener('click', function () {
-      gtag('event', 'begin_checkout', {
-        currency: 'USD',
-        value:    5.00,
-        items: [{
-          item_id:   'aero_odyssey_pro',
-          item_name: 'Aero Odyssey Pro — Lifetime Access',
-          price:     5.00,
-          quantity:  1,
-        }],
-      });
-    });
-  }
-
-  // 3–5. Game card buttons
-  [
-    { selector: '[data-game="perfect-stack"]', item_id: 'perfect_stack',    item_name: 'The Perfect Stack'    },
-    { selector: '[data-game="neon-chain"]',    item_id: 'neon_chain',       item_name: 'Neon Chain Reaction'  },
-    { selector: '[data-game="aero-odyssey"]',  item_id: 'aero_odyssey',     item_name: 'Aero Odyssey'         },
-  ].forEach(function (cfg) {
-    var el = document.querySelector(cfg.selector);
-    if (!el) return;
-    el.addEventListener('click', function () {
-      gtag('event', 'select_content', {
-        content_type: 'game',
-        item_id:      cfg.item_id,
-        content_id:   cfg.item_name,
-      });
-    });
-  });
-
-});
-</script>
+  <!-- Toast Notification System -->
+  <div id="toast-container"></div>
 
 </body>
+
 </html>
