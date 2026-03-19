@@ -12,6 +12,17 @@ const _googleProvider = new firebase.auth.GoogleAuthProvider();
 // Expose current user globally for other modules (e.g. paywall.js)
 window._currentUser = null;
 
+// ── Handle redirect result (mobile sign-in) ──────────────────
+_auth.getRedirectResult().then((result) => {
+  if (result && result.user) {
+    console.log('[Auth] Redirect sign-in completed:', result.user.displayName);
+  }
+}).catch((err) => {
+  if (err.code && err.code !== 'auth/no-auth-event') {
+    console.warn('[Auth] getRedirectResult error:', err.code);
+  }
+});
+
 // ── Auth State Listener ──────────────────────────────────────
 _auth.onAuthStateChanged(async (user) => {
   window._currentUser = user;
@@ -43,11 +54,19 @@ _auth.onAuthStateChanged(async (user) => {
 
 // ── Public API ───────────────────────────────────────────────
 /**
- * Open Google Sign-in popup.
+ * Open Google Sign-in.
+ * Uses redirect on mobile (popup blocked by most mobile browsers),
+ * popup on desktop.
  * Optionally set window._pendingPaywall = true before calling to
  * auto-open paywall on successful login.
  */
 function loginWithGoogle() {
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  if (isMobile) {
+    return _auth.signInWithRedirect(_googleProvider).catch((err) => {
+      console.warn('[Auth] Redirect sign-in failed:', err.code);
+    });
+  }
   return _auth.signInWithPopup(_googleProvider).catch((err) => {
     console.warn('[Auth] Google login cancelled or failed:', err.code);
   });

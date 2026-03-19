@@ -37,7 +37,7 @@
           },
           {
             "key": "Content-Security-Policy",
-            "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://www.paypal.com https://www.gstatic.com https://www.sandbox.paypal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.clarity.ms https://www.paypal.com https://*.googleapis.com https://*.firebaseio.com; frame-src https://www.paypal.com https://www.sandbox.paypal.com;"
+            "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://www.paypal.com https://www.gstatic.com https://www.sandbox.paypal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.clarity.ms https://www.paypal.com https://*.googleapis.com https://*.firebaseio.com; frame-src https://www.paypal.com https://www.sandbox.paypal.com https://minimal-arcade-777.firebaseapp.com;"
           }
         ]
       },
