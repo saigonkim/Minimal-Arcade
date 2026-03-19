@@ -12,7 +12,7 @@ const _googleProvider = new firebase.auth.GoogleAuthProvider();
 // Expose current user globally for other modules (e.g. paywall.js)
 window._currentUser = null;
 
-// ── Handle redirect result (mobile sign-in) ──────────────────
+// ── Handle redirect result (after signInWithRedirect returns) ─
 _auth.getRedirectResult().then((result) => {
   if (result && result.user) {
     console.log('[Auth] Redirect sign-in completed:', result.user.displayName);
@@ -36,6 +36,15 @@ _auth.onAuthStateChanged(async (user) => {
     if (typeof loadUserPremiumStatus === 'function') {
       await loadUserPremiumStatus(user.uid);
     }
+
+    // Handle pending paywall — works after both popup and redirect sign-in
+    // sessionStorage survives redirect; window._pendingPaywall covers same-page popup
+    const hasPending = window._pendingPaywall || sessionStorage.getItem('pending_paywall') === 'true';
+    if (hasPending) {
+      window._pendingPaywall = false;
+      sessionStorage.removeItem('pending_paywall');
+      if (typeof showPaywall === 'function') showPaywall();
+    }
   } else {
     // Clear all session/local premium data on logout
     sessionStorage.removeItem('arcade_premium');
@@ -44,31 +53,32 @@ _auth.onAuthStateChanged(async (user) => {
     localStorage.removeItem('arcade_tail');
     if (typeof updateGlobalPremiumUI === 'function') updateGlobalPremiumUI(false);
   }
-
-  // If a deferred paywall open was requested after login, execute it now
-  if (user && window._pendingPaywall) {
-    window._pendingPaywall = false;
-    if (typeof showPaywall === 'function') showPaywall();
-  }
 });
 
 // ── Public API ───────────────────────────────────────────────
 /**
  * Open Google Sign-in.
- * Uses redirect on mobile (popup blocked by most mobile browsers),
- * popup on desktop.
+ * Tries popup first (better UX). If the browser blocks it for any reason
+ * (popup blocker, CSP iframe issue, mobile browser), falls back to redirect.
  * Optionally set window._pendingPaywall = true before calling to
  * auto-open paywall on successful login.
  */
 function loginWithGoogle() {
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  if (isMobile) {
-    return _auth.signInWithRedirect(_googleProvider).catch((err) => {
-      console.warn('[Auth] Redirect sign-in failed:', err.code);
-    });
+  // Persist paywall intent so it survives a redirect back
+  if (window._pendingPaywall) {
+    sessionStorage.setItem('pending_paywall', 'true');
   }
+
   return _auth.signInWithPopup(_googleProvider).catch((err) => {
-    console.warn('[Auth] Google login cancelled or failed:', err.code);
+    // User intentionally closed the popup — do nothing
+    if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
+      return;
+    }
+    // Any other failure (popup blocked, CSP, internal error) → fall back to redirect
+    console.warn('[Auth] Popup sign-in failed (' + err.code + '), falling back to redirect');
+    return _auth.signInWithRedirect(_googleProvider).catch((e) => {
+      console.warn('[Auth] Redirect sign-in also failed:', e.code);
+    });
   });
 }
 
