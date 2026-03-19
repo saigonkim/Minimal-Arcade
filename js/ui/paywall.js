@@ -119,7 +119,21 @@ function _renderPayPalButton() {
 
     onApprove: async (_data, actions) => {
       setState('processing');
-      await actions.order.capture();
+      const captureResult = await actions.order.capture();
+      // GA4: fire purchase event on successful payment
+      if (typeof gtag === 'function') {
+        gtag('event', 'purchase', {
+          transaction_id: captureResult.id || _data.orderID,
+          currency:       'USD',
+          value:          5.00,
+          items: [{
+            item_id:   'aero_odyssey_pro',
+            item_name: 'Aero Odyssey Pro — Lifetime Access',
+            price:     5.00,
+            quantity:  1,
+          }],
+        });
+      }
       const aircraft = assignAircraft();
       showSuccessScreen(aircraft);
     },

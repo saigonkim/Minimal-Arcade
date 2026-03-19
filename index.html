@@ -1,11 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9TYHVSCWZT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9TYHVSCWZT');
+  </script>
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "vy1w1dnvct");
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <!-- Primary SEO Meta Tags -->
-  <title>Minimal Arcade — v2.4.3</title>
+  <title>Minimal Arcade</title>
   <meta name="title" content="Minimal Arcade — Premium Minimalist Browser Games" />
   <meta name="description" content="Discover three addictive, minimalist browser games: The Perfect Stack, Neon Chain Reaction, and Aero Odyssey. Play for free or unlock the premium experience." />
   <meta name="keywords" content="minimalist games, browser games, html5 games, arcade, stack game, chain reaction, flight simulator, free games" />
@@ -58,7 +74,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="css/style.css?v=2.4.1" />
+  <link rel="stylesheet" href="css/style.css?v=2.4.4" />
 
   <!-- Firebase SDK (compat v9) -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -137,7 +153,7 @@
   <section class="hero-section">
     <div class="container text-center">
       <div class="hero-eyebrow"><span class="dot"></span> Minimalist · Addictive · Fun</div>
-      <h1 class="hero-title">Experience the <span class="gradient-word">Perfect Flow v2.4.3</span></h1>
+      <h1 class="hero-title">Experience the <span class="gradient-word">Perfect Flow</span></h1>
       <p class="hero-subtitle">Three handcrafted browser games designed for pure focus and visual satisfaction. Play free or upgrade to Pro.</p>
       
       <div class="global-highscore-bar">
@@ -371,12 +387,62 @@
 </div>
 
 <!-- Scripts -->
-<script src="js/ui/highscore.js?v=2.4.1"></script>
-<script src="js/ui/paywall.js?v=2.4.1"></script>
-<script src="js/main.js?v=2.4.1"></script>
-<script src="js/games/perfect-stack.js?v=2.4.1"></script>
-<script src="js/games/neon-chain.js?v=2.4.1"></script>
-<script src="js/games/aero-odyssey.js?v=2.4.1"></script>
+<script src="js/ui/highscore.js?v=2.4.4"></script>
+<script src="js/ui/paywall.js?v=2.4.4"></script>
+<script src="js/main.js?v=2.4.4"></script>
+<script src="js/games/perfect-stack.js?v=2.4.4"></script>
+<script src="js/games/neon-chain.js?v=2.4.4"></script>
+<script src="js/games/aero-odyssey.js?v=2.4.4"></script>
+
+<!-- GA4 Event Tracking -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  // 1. Google Login button
+  var loginBtn = document.getElementById('auth-login-btn');
+  if (loginBtn) {
+    loginBtn.addEventListener('click', function () {
+      gtag('event', 'login', { method: 'Google' });
+    });
+  }
+
+  // 2. Go Premium button → begin_checkout
+  //    (actual purchase event fires in paywall.js on PayPal capture success)
+  var premiumBtn = document.getElementById('header-premium-btn');
+  if (premiumBtn) {
+    premiumBtn.addEventListener('click', function () {
+      gtag('event', 'begin_checkout', {
+        currency: 'USD',
+        value:    5.00,
+        items: [{
+          item_id:   'aero_odyssey_pro',
+          item_name: 'Aero Odyssey Pro — Lifetime Access',
+          price:     5.00,
+          quantity:  1,
+        }],
+      });
+    });
+  }
+
+  // 3–5. Game card buttons
+  [
+    { selector: '[data-game="perfect-stack"]', item_id: 'perfect_stack',    item_name: 'The Perfect Stack'    },
+    { selector: '[data-game="neon-chain"]',    item_id: 'neon_chain',       item_name: 'Neon Chain Reaction'  },
+    { selector: '[data-game="aero-odyssey"]',  item_id: 'aero_odyssey',     item_name: 'Aero Odyssey'         },
+  ].forEach(function (cfg) {
+    var el = document.querySelector(cfg.selector);
+    if (!el) return;
+    el.addEventListener('click', function () {
+      gtag('event', 'select_content', {
+        content_type: 'game',
+        item_id:      cfg.item_id,
+        content_id:   cfg.item_name,
+      });
+    });
+  });
+
+});
+</script>
 
 </body>
 </html>
