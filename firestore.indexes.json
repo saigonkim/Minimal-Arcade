@@ -4,8 +4,8 @@
       "collectionGroup": "scores",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "gameId", "mode": "ASCENDING" },
-        { "fieldPath": "score", "mode": "DESCENDING" }
+        { "fieldPath": "gameId", "order": "ASCENDING" },
+        { "fieldPath": "score", "order": "DESCENDING" }
       ]
     }
   ],

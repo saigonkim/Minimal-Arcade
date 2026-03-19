@@ -115,7 +115,7 @@ async function submitScore(gameId, score) {
   const entry = {
     gameId: gameId,
     score: score,
-    displayName: user ? (user.displayName || 'Arcade Pro') : 'Anonymous',
+    displayName: user ? (user.displayName || 'Arcade Pro') : 'Noname',
     uid: user ? user.uid : 'anon',
     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
   };
@@ -134,17 +134,19 @@ async function submitScore(gameId, score) {
 
 /**
  * Fetch top 5 scores for a specific game.
+ * Sorts client-side to avoid composite index requirement.
  * @param {string} gameId
  */
 async function getLeaderboard(gameId) {
   try {
     const snap = await _db.collection('scores')
       .where('gameId', '==', gameId)
-      .orderBy('score', 'desc')
-      .limit(5)
       .get();
-    
-    return snap.docs.map(doc => doc.data());
+
+    return snap.docs
+      .map(doc => doc.data())
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 5);
   } catch (err) {
     console.warn('[DB] Error fetching leaderboard:', err);
     return [];
