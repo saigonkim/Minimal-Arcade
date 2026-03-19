@@ -233,7 +233,16 @@ function refreshPremiumUI() {
   // Update the badge on the Aero card to show the tail number as a "Fly Now" action
   const aeroBadge = document.getElementById('aero-status-badge');
   if (aeroBadge) {
-    aeroBadge.innerHTML = `<span style="color: var(--accent-gold); font-weight: 700;">✈ ${aircraft.tail}</span> <span style="color: rgba(255,255,255,0.85); margin-left: 4px;">— Fly Now</span>`;
+    // Use DOM methods instead of innerHTML to prevent XSS
+    aeroBadge.textContent = '';
+    const tailSpan = document.createElement('span');
+    tailSpan.style.cssText = 'color: var(--accent-gold); font-weight: 700;';
+    tailSpan.textContent = '\u2708 ' + aircraft.tail;
+    const labelSpan = document.createElement('span');
+    labelSpan.style.cssText = 'color: rgba(255,255,255,0.85); margin-left: 4px;';
+    labelSpan.textContent = '\u2014 Fly Now';
+    aeroBadge.appendChild(tailSpan);
+    aeroBadge.appendChild(labelSpan);
     aeroBadge.style.background = 'rgba(255, 201, 74, 0.1)';
     aeroBadge.style.padding = '6px 14px';
     aeroBadge.style.borderRadius = '20px';
